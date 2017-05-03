@@ -100,10 +100,11 @@ jedis.close();
 	```lua
 	local out; 
 	if (redis.call('LLEN','dalist')==4) then 
-			out=redis.call('LRANGE','dalist',0,-1); 			redis.call('DEL','dalist'); 
-			return out; 
+		out=redis.call('LRANGE','dalist',0,-1); 			
+		redis.call('DEL','dalist'); 
+		return out; 
 	else 
-			return {}; 
+		return {}; 
 	end
 	```
 4. Si al ejecutarse el script LUA en REDIS se obtienen la lista de puntos, el servidor construye con los mismos el polígono, y los publica en el tópico correspondiente.
