@@ -30,13 +30,9 @@ En este ejercicio se va a ajustar la aplicación de dibujo colaborativo, y se le
             <version>1.7.25</version>
         </dependency>   
  	```                               
+       
 
-
-        
-2. Revise [en la documentación de REDIS](http://redis.io/topics/data-types) el tipo de dato HASH, y la manera como se agregan tablas hash a una determianda llave. Con esto presente, inicie un cliente redis (redis-cli) en su máquina virtual, y cree varias llaves, cada una asociada a cuatro tuplas (llave-valor) correspondientes: la palabra a adivinar, lo que se ha adivinado de la palabra hasta ahora, el ganador, y si la partida ha finalizado. Use como llave de los HASH una cadena compuesta, que incluya el identificador de la partida, por ejemplo: "partida:12345", "partida:9999", etc.    
-
-
-4. Copie la siguiente clase y archivo de configuración (en las rutas respectivas) dentro de su proyecto (éstas ya tiene la configuración para manejar un pool de conexiones al REDIS):
+3. Copie la siguiente clase y archivo de configuración (en las rutas respectivas) dentro de su proyecto (éstas ya tiene la configuración para manejar un pool de conexiones al REDIS):
 
 	* [https://github.com/hcadavid/jedis-examples/blob/master/src/main/java/util/JedisUtil.java](https://github.com/hcadavid/jedis-examples/blob/master/src/main/java/util/JedisUtil.java)
 	* [https://github.com/hcadavid/jedis-examples/blob/master/src/main/resources/jedis.properties](https://github.com/hcadavid/jedis-examples/blob/master/src/main/resources/jedis.properties)
