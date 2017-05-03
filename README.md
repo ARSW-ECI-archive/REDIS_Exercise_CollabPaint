@@ -73,7 +73,7 @@ jedis.close();
 ```
 
 
-1. En lugar de tener una lista de puntos en la memoria del servidor, se tendrán dos listas de enteros: una para los valores en X y otra para los valores en Y.
+1. En lugar de tener una lista de puntos en la memoria del servidor, se tendrán dos llaves asociadas a listas de enteros en REDIS: una para los valores en X y otra para los valores en Y.
 
 2. El servidor, al recibir un nuevo punto:
 	* Inicia [una transacción REDIS](https://github.com/xetorthio/jedis/wiki/AdvancedUsage), haciendo 'watch' sobre las dos listas anteriores.
