@@ -91,18 +91,45 @@ jedis.close();
 	2.  En caso de que el mismo sea cuatro, guarde los cuatro elementos en una variable y borre la llave en REDIS. 
 	3. Al final, el programa retorna una lista vacía si la lista de puntos NO tenía cuatro puntos, o la lista con dichos elementos en caso contrario. 
 	
-	El siguiente es el script correspondiente (ajuste los nombres de las llaves a su conveniencia), el cual puede ejecuatarse a través del método 'eval' (tanto de REDIS como de Jedis):
+	El siguiente es el script correspondiente (ajuste los nombres de las llaves a su conveniencia), el cual puede ejecuatarse a través del método 'eval' de la Transacción tanto de REDIS como de Jedis. Este ejemplo asume que se tienen dos listas, una para los Xs y otra para los Ys. Al final, se retorna un  arreglo de arreglos (una lista con las dos listas de valores en X y en Y).
 
 	```lua
-	local out; 
-	if (redis.call('LLEN','dalist')==4) then 
-		out=redis.call('LRANGE','dalist',0,-1); 			
-		redis.call('DEL','dalist'); 
-		return out; 
+	local xval,yval; 
+	if (redis.call('LLEN','dalist1')==4) then 
+		xval=redis.call('LRANGE','dalist1',0,-1); 			
+		yval=redis.call('LRANGE','dalist2',0,-1);
+		redis.call('DEL','dalist1'); 
+		redis.call('DEL','dalist2'); 		
+		return {xval,yval}; 
 	else 
 		return {}; 
 	end
 	```
+
+	Para ejecutar este script dentro de una transacción en Jedis, tenga en cuenta usar la operación tx.eval() que hace uso de los bytes, en lugar de la que recibe una cadena. Con esto al momento de hacer el 'exec' de la transacción (no antes!), a la variable 'luares' se le asignará lo returnado por la evaluación del script Lua. En caso de que dicho Script retorne '{}' (arreglo vacío), en Jedis se recibirá un objeto de tipo ArrayList, con cero elementos. En caso de que sí reciba la respuesta, recibirá un ArrayList con dos ArrayList (en este caso, un ArrayList con DOS ArrayList, cada uno de estos con los cuatro puntos). Tenga en cuenta que en este caso cada punto vendrá como un byte[], y se deberá reconstruir en String:
+	
+	```java
+	String luaScript = "..."
+
+	//operaciones con la transacción...
+	
+	Response<Object> luares= tx.eval(script.getBytes(), 0, "0".getBytes());
+
+	//operaciones con la transacción...
+		
+	List<Object> res=tx.exec();
+	
+	if (luares
+	
+	//imprimirel valor (convertido a cadena) del primer número de la primera lista dada como respuesta,
+	//si el resultado es un arreglo con dos elementos:
+	if (((ArrayList)luares.get()).size()==2){
+            System.out.println(new String((byte[])((ArrayList)(((ArrayList)luares.get()).get(0))).get(0)));
+        }	
+	System.out.println(new String((byte[])((ArrayList)(((ArrayList)luares.get()).get(0))).get(0)));
+	```
+
+
 4. Si al ejecutarse el script LUA en REDIS se obtienen la lista de puntos, el servidor construye con los mismos el polígono, y los publica en el tópico correspondiente.
 
 
