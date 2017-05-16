@@ -125,8 +125,8 @@ jedis.close();
 	//si el resultado es un arreglo con dos elementos:
 	if (((ArrayList)luares.get()).size()==2){
             System.out.println(new String((byte[])((ArrayList)(((ArrayList)luares.get()).get(0))).get(0)));
-        }	
-	System.out.println(new String((byte[])((ArrayList)(((ArrayList)luares.get()).get(0))).get(0)));
+	}	
+
 	```
 
 
