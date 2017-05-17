@@ -118,9 +118,7 @@ jedis.close();
 	//operaciones con la transacción...
 		
 	List<Object> res=tx.exec();
-	
-	if (luares
-	
+		
 	//imprimirel valor (convertido a cadena) del primer número de la primera lista dada como respuesta,
 	//si el resultado es un arreglo con dos elementos:
 	if (((ArrayList)luares.get()).size()==2){
