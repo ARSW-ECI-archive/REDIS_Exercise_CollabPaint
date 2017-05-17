@@ -113,7 +113,7 @@ jedis.close();
 
 	//operaciones con la transacción...
 	
-	Response<Object> luares= tx.eval(script.getBytes(), 0, "0".getBytes());
+	Response<Object> luares= tx.eval(luaScript.getBytes(), 0, "0".getBytes());
 
 	//operaciones con la transacción...
 		
