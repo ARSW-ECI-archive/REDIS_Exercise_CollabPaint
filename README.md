@@ -149,3 +149,14 @@ Una vez hecho esto, en la aplicación ajustar el archivo jedis.properties, poner
 
 
 Actualizar (y corregir) el diagrama realizado en el laboratorio anterior.
+
+
+
+
+# Criteros de evaluación
+
+1. La aplicación fue configurada para funcionar en un entorno de múltiples instancias de la misma:
+	1.1. La aplicación usa un Broker de mensajería externo.
+	1.2. La aplicación NO matiene estados en memoria. En lugar de esto, usa una representación en un caché No-SQL externo.
+2. Se hizo la correcta configuración de balanceo de carga con NGINX.
+
